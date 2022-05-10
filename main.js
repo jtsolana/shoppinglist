@@ -76,9 +76,10 @@ ipcMain.on('item:add',function(e, item){
     addWindow.close();
 
     knex('list')
-    .insert({ id: 4, product: item })
+    .insert({product: item })
     .then( function (result) {
-        res.json({ success: true, message: 'ok' });     // respond back to request
+        console.log(result);
+       // result.json({ success: true, message: 'ok' });     // respond back to request
      })
 
 });
