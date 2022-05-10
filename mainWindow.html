@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ShoppingList</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo left">Shopping List</a>
+    </div>
+  </nav>
+
+ <ul id ="list"></ul>
+
+ <script>
+    const electron = require("electron");
+    const {ipcRenderer} = electron;
+    document.addEventListener("DOMContentLoaded", function(){
+        ipcRenderer.send("mainWindowLoaded")
+        ipcRenderer.on("resultSent", function(evt, result){
+            let ul = document.getElementById("list");
+            ul.className = 'collection';
+            console.log(result);
+            for(var i = 0; i < result.length;i++){
+                let li = document.createElement('li');
+                li.className = 'collection-item';
+                li.appendChild(document.createTextNode(result[i].product.toString()));
+                ul.appendChild(li);
+            }
+        });
+    });
+</script>
+
+
+<script>
+
+    let ul = document.getElementById("list");
+
+    // Add item
+     ipcRenderer.on('item:add', function(e, item){
+         ul.className = 'collection';
+         const li = document.createElement('li');
+         li.className = 'collection-item';
+         const itemText = document.createTextNode(item);
+         li.appendChild(itemText);
+         ul.appendChild(li);
+         console.log(itemText);
+     });
+
+
+    // Clear items
+     ipcRenderer.on('item:clear', function(){
+         ul.innerHTML = '';
+         ul.className = '';
+     }); 
+
+     // Remove item
+     
+     ul.addEventListener('dblclick', removeItem);
+
+     function removeItem(e){
+         e.target.remove();
+         if(ul.children.length == 0){
+             ul.className = '';
+         }
+     }
+ </script> 
+
+
+</body>
+</html>
