@@ -61,10 +61,18 @@
      ul.addEventListener('dblclick', removeItem);
 
      function removeItem(e){
-         e.target.remove();
-         if(ul.children.length == 0){
-             ul.className = '';
-         }
+
+        console.log(e);
+        //  e.target.remove();
+        //  if(ul.children.length == 0){
+        //      ul.className = '';
+        //  }
+
+
+        // knex('list')
+        //     .where({ id: 2 })
+        //     .del()
+
      }
  </script> 
 

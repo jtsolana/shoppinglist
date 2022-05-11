@@ -32,7 +32,7 @@ var knex = require("knex")({
     }));
     
     ipcMain.on("mainWindowLoaded", function () {
-        let result = knex.select("product").from("list")
+        let result = knex.select("id","product").from("list")
         result.then(function(rows){
             mainWindow.webContents.send("resultSent", rows);
         })
