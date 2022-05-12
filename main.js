@@ -1,19 +1,10 @@
  const electron = require('electron');
  const url = require('url');
  const path = require('path');
-
  const {app, BrowserWindow, Menu, ipcMain} = electron;
+ const knex = require('./config/knex.js');
 
-// CONNECT DB
-var knex = require("knex")({
-    client: "sqlite3",
-    connection: {
-        filename: "./shopping.db"
-    }
-});
-
- // SET ENV
-//process.env.NODE_ENV = 'production';
+ //process.env.NODE_ENV = 'production';
 
  let mainWindow;
  let addWindow;
@@ -77,9 +68,8 @@ ipcMain.on('item:add',function(e, item){
 
     knex('list')
     .insert({product: item })
-    .then( function (result) {
-        console.log(result);
-       // result.json({ success: true, message: 'ok' });     // respond back to request
+    .then( function () {
+        // respond back to request
      })
 
 });
